@@ -187,10 +187,13 @@ with st.echo(code_location='below'):
     multiple = pd.DataFrame(df[str(year) + '_y']/df[str(year) + '_x'])
     multiple['State'] = pd.DataFrame([states[x] for x in list(df['State'])])[0]
     multiple.columns = ['Multiple', 'State']
-    c = alt.Chart(df).mark_circle().encode(x=str(year) + '_x', y=str(year) + '_y', tooltip=[str(year) + '_x', str(year) + '_y', 'State']).interactive()
+    c = alt.Chart(df, title = f'House values and rent by state in {year}')\
+        .mark_circle()\
+        .encode(x=alt.X(str(year) + '_x', title='rent'), y=alt.Y(str(year) + '_y', title='house price'),
+                tooltip=[str(year) + '_x', str(year) + '_y', 'State']).interactive()
     st.altair_chart(c)
 
-    c = alt.Chart(multiple).mark_bar().encode(x='Multiple', y=alt.Y('State', sort='x')).interactive()
+    c = alt.Chart(multiple, title=f'Price-to-rent multiple in {year}').mark_bar().encode(x='Multiple', y=alt.Y('State', sort='x')).interactive()
     st.altair_chart(c)
 
     st.write('### Source code')
