@@ -2,6 +2,4 @@ pandas
 numpy
 seaborn
 altair
-urllib.request
-json
 plotly
