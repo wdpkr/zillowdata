@@ -10,7 +10,7 @@ import plotly.express as px
 import plotly
 
 with st.echo(code_location='below'):
-    @st.cache
+    @st.cache(allow_output_mutation=True)
     def get_data():
         '''
         Downloads Zillow data from https://www.zillow.com/research/data/ and counties geojson info for the USA.
@@ -103,7 +103,7 @@ with st.echo(code_location='below'):
 
     timeseries_home_values_state = get_timeseries_home_values_state()
 
-    states_timeseries_plot = st.multiselect('Select states:', list(timeseries_home_values_state.columns))
+    states_timeseries_plot = st.multiselect('Select states:', list(timeseries_home_values_state.columns), default = ['California', 'Alabama'])
     timeseries_home_values_state = timeseries_home_values_state[states_timeseries_plot].reset_index()
     timeseries_home_values_state['index'] = timeseries_home_values_state['index'].str[:4].astype(int)
     timeseries_home_values_state = timeseries_home_values_state.groupby('index').mean().reset_index()
